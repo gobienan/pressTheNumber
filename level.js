@@ -57,7 +57,7 @@ export function updateLevel(score) {
   // Check the score thresholds to determine the new level.
   for (let i = scoreThresholds.length - 1; i >= 0; i--) {
     if (score >= scoreThresholds[i]) {
-      if (currentLevel !== i + 1) {
+      if (currentLevel !== i + 1 && currentLevel < 9) {
         currentLevel = i + 1;
         levelUpdateCallback(currentLevel); // Update the displayed level.
       }
