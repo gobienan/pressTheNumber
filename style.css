@@ -15,7 +15,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-height: 100vh;
+  min-height: 90vh;
   color: rgba(255, 255, 255, 0.87);
   transition: background-color 0.25s ease-out;
 }
