@@ -3,6 +3,7 @@ import { setupGrid, updateGrid } from "./grid.js";
 import { setupScore, updateScore, getScore } from "./score.js"; // Import score-related functions.
 import { setupLevel, updateLevel, getLevel } from "./level.js"; // Import level-related functions.
 import { generateNumbersToPress } from "./numberGenerator.js"; // Import the generateNumbersToPress function.
+import { calculateComboMultiplier, updateCombo } from "./combo.js"; // Import the calculateComboMultiplier function.
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -18,8 +19,10 @@ document.querySelector("#app").innerHTML = `
 const grid = document.querySelector(".grid");
 const scoreContainer = document.querySelector(".score");
 const levelContainer = document.querySelector(".level");
+const comboContainer = document.querySelector(".combo");
 
 const currentLevel = getLevel();
+let streak = 0;
 let numbersToPress = generateNumbersToPress();
 
 console.log({ numbersToPress });
@@ -27,20 +30,23 @@ function handleNumberPress(number) {
   console.log("handleNumberPress", { numbersToPress });
   const isNumberInArray = numbersToPress.findIndex((n) => n === number);
   if (isNumberInArray !== -1) {
-    const score = updateScore(10);
+    streak++;
+    const comboMultiplier = calculateComboMultiplier(streak); // Calculate combo multiplier.
+    const score = updateScore(10 * comboMultiplier); // Update score.
     numbersToPress.splice(isNumberInArray, 1);
     updateLevel(score);
     updateGrid(numbersToPress);
+    updateCombo(streak); // Update the combo display.
   } else {
+    streak = 0;
     updateGrid(numbersToPress, number);
     updateScore(-5);
+    updateCombo(streak); // Update the combo display.
   }
 
   if (numbersToPress.length === 0) {
     numbersToPress = generateNumbersToPress();
-    setTimeout(() => {
-      updateGrid(numbersToPress);
-    }, 300);
+    updateGrid(numbersToPress);
   }
 }
 
