@@ -45,6 +45,7 @@ button {
   cursor: pointer;
   border: 1px solid #494848;
   transition: border-color 0.25s;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 .tile.tile--active {
