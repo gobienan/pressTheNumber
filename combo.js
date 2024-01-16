@@ -3,7 +3,7 @@ export function calculateComboMultiplier(streak) {
   return multiplier[streak - 1] || 1;
 }
 
-export function updateCombo(streak) {
-  const comboContainer = document.querySelector(".combo__value");
+export function updateCombo(element, streak) {
+  const comboContainer = element.querySelector(".combo__value");
   comboContainer.textContent = streak;
 }
