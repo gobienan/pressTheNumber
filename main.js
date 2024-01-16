@@ -71,11 +71,16 @@ function onTimerEnd() {
     updateLevel(-level);
     updateGrid(numbersToPress);
     startTimer(timerContainer, totalTimeInSeconds, onTimerEnd);
+  } else {
+    resetTimer(timerContainer);
+    updateScore(0);
+    updateLevel(0);
+    updateGrid(numbersToPress);
   }
 }
 
-setupScore(scoreContainer, 100); // Set up the score display.
-setupLevel(levelContainer, 2); // Set up the level display.
+setupScore(scoreContainer, 0); // Set up the score display.
+setupLevel(levelContainer, 1); // Set up the level display.
 
 console.log(`Current Level: ${currentLevel}`);
 setupGrid(grid, handleNumberPress);
