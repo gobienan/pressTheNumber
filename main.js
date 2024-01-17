@@ -9,17 +9,16 @@ import { startTimer, resetTimer } from "./timer.js"; // Import the timer functio
 document.querySelector("#app").innerHTML = `
   <div>
     <h3>Press the Number</h3>
-    <div class=Wrapper>
-      <div class="Timer">
+    <div class="Timer">
         <div class="Timer__progress"></div>
         <span class="Timer__value"></span>
       </div>
-      <div class="grid"></div>
-      <br />
-      <div class="score">Score: <span class="score__value"></span></div>
-      <div class="combo">Combo: <span class="combo__value">-</span></div>
-      <div class="level">Level: <span class="level__value"></span></div>
-  </div>
+    <div class="grid"></div>
+    <br />
+    <div class="score">Score: <span class="score__value"></span></div>
+    <div class="combo">Combo: <span class="combo__value">-</span></div>
+    <div class="level">Level: <span class="level__value"></span></div>
+
   </div>
 `;
 

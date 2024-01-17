@@ -1,10 +1,11 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --accent-color: #ffff00;
+  --background-color: #2c284e;
+  font-family: "PT Mono", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #87ceeb;
+  color: var(--accent-color);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,8 +17,9 @@ body {
   display: flex;
   place-items: center;
   min-height: 90vh;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--accent-color);
   transition: background-color 0.25s ease-out;
+  background-color: var(--background-color);
 }
 
 #app {
@@ -25,9 +27,8 @@ body {
 }
 
 .Wrapper {
-  background-color: rgba(7, 7, 7, 0.12);
   padding: 20px;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   box-shadow: 0 20px 40px 1px rgba(1, 1, 1, 0.1);
   border: 1px solid #00000050;
 }
@@ -37,11 +38,11 @@ body {
   justify-content: center;
   grid-template-columns: repeat(3, 100px);
   grid-auto-rows: minmax(100px, auto);
-  grid-gap: 10px;
+  grid-gap: 4px;
 }
 
-button {
-  border-radius: 20px;
+.tile {
+  /* border-radius: 20px; */
   width: 100px;
   height: 100px;
   font-size: 1.5em;
@@ -49,18 +50,45 @@ button {
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  border: 1px solid #00000037;
-  mix-blend-mode: multiply;
-  transition: border-color 0.25s, background-color 0.25s ease-out, color 0.25s;
-  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--background-color);
+  transition: border-color 0.2s ease-out, background-color 0.2s ease-out, color 0.2s ease-out;
+  color: rgba(255, 255, 255, 0.25);
   outline: none;
-  background-color: #ffffff;
+  background-color: var(--background-color);
+  filter: brightness(0.7);
+  position: relative;
+
+  .tile__svg {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+  }
+
+  .tile__number {
+    position: relative;
+    z-index: 1;
+  }
+
+  svg {
+    color: #151515;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .tile.tile--active {
-  background-color: #ffffff3f;
-  mix-blend-mode: normal;
+  filter: brightness(1);
+
+  background-color: var(--accent-color);
   color: black;
+
+  svg {
+    color: var(--accent-color);
+  }
 }
 
 .tile.tile--correct {
@@ -97,8 +125,9 @@ button {
   position: relative;
   width: 100%;
   height: 10px;
-  border-radius: 8px;
-  background-color: #ccc;
+  /* border-radius: 8px; */
+  background-color: var(--background-color);
+  filter: brightness(0.7);
   margin-bottom: 10px;
 }
 
@@ -107,10 +136,10 @@ button {
   top: 0;
   left: 0;
   height: 100%;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   width: 100%;
-  background-color: #4caf50; /* Initial color is green */
-  transition: width 0.3s ease-out, background-color 0.3s ease-out; /* Transition for width and background-color change */
+  background-color: var(--accent-color);
+  transition: width 1s, background-color 1s; /* Transition for width and background-color change */
 }
 
 .Timer__value {
@@ -123,7 +152,7 @@ button {
 }
 
 button:hover {
-  border-color: #717171;
+  border-color: #000000;
 }
 
 button:focus,
@@ -151,4 +180,13 @@ a:hover {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* pt-mono-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "PT Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/pt-mono-v13-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
