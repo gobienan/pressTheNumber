@@ -35,17 +35,14 @@ export function updateGrid(numberToPress, numberPressed) {
   tiles.forEach((tile) => {
     tile.classList.remove("tile--incorrect");
     tile.classList.remove("tile--active");
-
-    setTimeout(() => {
-      tile.classList.remove("tile--correct");
-    }, 100);
+    tile.classList.remove("tile--correct");
   });
 
   if (numberPressed) {
     const tile = tiles[numpadOrder.indexOf(numberPressed)];
     console.log({ numberPressed, numberToPress, tile });
     if (numberToPress.includes(numberPressed)) {
-      tile.classList.add("tile--correct");
+      // tile.classList.add("tile--correct");
     } else {
       tile.classList.add("tile--incorrect");
     }
