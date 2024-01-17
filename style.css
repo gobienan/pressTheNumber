@@ -1,6 +1,28 @@
+/* style.css */
+
+/* Define color variables for better maintainability */
 :root {
   --accent-color: #ffa500;
   --background-color: #184669;
+  --text-color: #333;
+  --tile-background-color: var(--background-color);
+  --tile-border-color: #151515;
+  --tile-hover-color: #000000;
+  --tile-focus-color: auto; /* Use default browser focus color */
+  --tile-active-color: var(--accent-color);
+  --tile-active-text-color: black;
+  --tile-active-hover-color: var(--accent-color);
+}
+
+/* General styling */
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-height: 90vh;
+  color: var(--accent-color);
+  transition: background-color 0.25s ease-out;
+  background-color: var(--background-color);
   font-family: "PT Mono", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -12,27 +34,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-height: 90vh;
-  color: var(--accent-color);
-  transition: background-color 0.25s ease-out;
-  background-color: var(--background-color);
-}
-
+/* App container */
 #app {
   margin: 0 auto;
 }
 
-.Wrapper {
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px 1px rgba(1, 1, 1, 0.1);
-  border: 1px solid #00000050;
-}
-
+/* Number grid */
 .grid {
   display: grid;
   justify-content: center;
@@ -41,6 +48,7 @@ body {
   grid-gap: 4px;
 }
 
+/* Number tile styling */
 .tile {
   width: 100px;
   height: 100px;
@@ -54,89 +62,76 @@ body {
   border-radius: 10px;
   transition: border-color 0.2s ease-out, background-color 0.2s ease-out, color 0.2s ease-out;
   color: rgba(255, 255, 255, 0.25);
-  background-color: var(--background-color);
+  background-color: var(--tile-background-color);
   filter: brightness(0.7);
   position: relative;
-
-  .tile__svg {
-    position: absolute;
-    z-index: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-  }
-
-  .tile__number {
-    position: relative;
-    z-index: 1;
-  }
-
-  svg {
-    color: #151515;
-    width: 100%;
-    height: 100%;
-  }
-
-  &::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-    width: 100px;
-    height: 100px;
-    z-index: 1;
-    content: "";
-    border-radius: 10px;
-    transition: all 0.2s ease-out;
-    background-color: inherit;
-  }
 }
 
+.tile__svg {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+.tile__number {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tile hover and focus styles */
+.tile:hover {
+  border-color: var(--tile-hover-color);
+}
+
+.tile:focus,
+.tile:focus-visible {
+  border: 4px auto var(--tile-focus-color);
+}
+
+/* Active tile styling */
 .tile.tile--active {
   filter: brightness(1);
-  background-color: var(--accent-color);
-  color: black;
-
-  svg {
-    color: var(--accent-color);
-  }
-
-  &::after {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-    content: "";
-  }
+  background-color: var(--tile-active-color);
+  color: var(--tile-active-text-color);
 }
 
+.tile.tile--active svg {
+  color: var(--tile-active-color);
+}
+
+/* Correct tile styling */
 .tile.tile--correct {
   position: relative;
-
-  &::after {
-    transform: translate(-50%, -50%) scale(1.15);
-    opacity: 1;
-    content: "";
-  }
 }
 
+.tile.tile--correct::after {
+  transform: translate(-50%, -50%) scale(1.15);
+  opacity: 1;
+  content: "";
+}
+
+/* Incorrect tile styling */
 .tile.tile--incorrect {
   background-color: #ff4040;
-
-  &::after {
-    transform: translate(-50%, -50%) rotate(5deg)  scale(1.15);
-    opacity: 1;
-    content: "";
-  }
 }
 
+.tile.tile--incorrect::after {
+  transform: translate(-50%, -50%) rotate(5deg) scale(1.15);
+  opacity: 1;
+  content: "";
+}
+
+/* Timer styling */
 .Timer {
   position: relative;
   width: 100%;
   height: 10px;
   border-radius: 8px;
-  background-color: var(--background-color);
+  background-color: var(--tile-background-color);
   margin-bottom: 10px;
 }
 
@@ -147,7 +142,6 @@ body {
   height: 100%;
   border-radius: 8px;
   width: 100%;
-
   background-color: var(--accent-color);
   transition: width 1s, background-color 1s; /* Transition for width and background-color change */
 }
@@ -156,47 +150,48 @@ body {
   display: none;
   text-align: center;
   font-size: 16px;
-  color: #333;
+  color: var(--text-color);
   position: relative;
   z-index: 1;
 }
 
+/* Button hover style */
 button:hover {
-  border-color: #000000;
+  border-color: var(--tile-hover-color);
 }
 
-button:focus,
-button:focus-visible {
-  border: 4px auto -webkit-focus-ring-color;
-}
-
+/* Link styling */
 a {
   font-weight: 500;
   color: #717171;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
+/* Light mode styles */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --text-color: #213547;
+    --background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
 }
 
-/* pt-mono-regular - latin */
+/* Define font */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: "PT Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/pt-mono-v13-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("/fonts/pt-mono-v13-latin-regular.woff2") format("woff2");
 }

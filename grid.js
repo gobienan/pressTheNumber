@@ -1,35 +1,41 @@
-import anime from "animejs";
+// grid.js
 
-const numpadOrder = [7, 8, 9, 4, 5, 6, 1, 2, 3];
+// Constants for better readability
+const NUMPAD_ORDER = [7, 8, 9, 4, 5, 6, 1, 2, 3];
+
+// Function to set up the number grid
 export function setupGrid(element, callback = () => {}) {
-  const elements = Array.from({ length: 9 }, () => document.createElement("button"));
+  const elements = Array.from({ length: 9 }, () => createGridButton());
 
-  elements.forEach((button, index) => {
-    const number = numpadOrder[index];
-    const span = document.createElement("span");
-    span.classList.add("tile__number");
-    span.textContent = number;
-    button.append(span);
-
-    button.classList.add("tile");
-
-    button.addEventListener("click", () => {
-      console.log("You clicked", number);
-      callback(number);
-    });
-  });
-
-  document.addEventListener("keydown", (event) => {
+  const handleKeyDown = (event) => {
     const number = Number(event.key);
     if (number >= 1 && number <= 9) {
-      console.log("You pressed", number);
       callback(number);
     }
+  };
+
+  const handleButtonClick = (number) => {
+    callback(number);
+  };
+
+  elements.forEach((button, index) => {
+    const number = NUMPAD_ORDER[index];
+    button.textContent = number;
+    button.addEventListener("click", () => handleButtonClick(number));
   });
+
+  document.addEventListener("keydown", handleKeyDown);
 
   element.append(...elements);
 }
 
+function createGridButton() {
+  const button = document.createElement("button");
+  button.classList.add("tile");
+  return button;
+}
+
+// Function to update the grid based on user input
 export function updateGrid(numberToPress, numberPressed) {
   const tiles = document.querySelectorAll(".tile");
   tiles.forEach((tile) => {
@@ -39,7 +45,7 @@ export function updateGrid(numberToPress, numberPressed) {
   });
 
   if (numberPressed) {
-    const tile = tiles[numpadOrder.indexOf(numberPressed)];
+    const tile = tiles[NUMPAD_ORDER.indexOf(numberPressed)];
     console.log({ numberPressed, numberToPress, tile });
     if (numberToPress.includes(numberPressed)) {
       // tile.classList.add("tile--correct");
@@ -49,7 +55,7 @@ export function updateGrid(numberToPress, numberPressed) {
   }
 
   numberToPress.forEach((number) => {
-    const tile = tiles[numpadOrder.indexOf(number)];
+    const tile = tiles[NUMPAD_ORDER.indexOf(number)];
     tile.classList.add("tile--active");
   });
 }

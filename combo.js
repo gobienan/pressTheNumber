@@ -1,6 +1,8 @@
+// combo.js
+
 export function calculateComboMultiplier(streak) {
-  const multiplier = [1, 1.1, 1.2, 1.3, 1.4, 1.5];
-  return multiplier[streak - 1] || 1;
+  const MULTIPLIERS = [1, 1.1, 1.2, 1.3, 1.4, 1.5];
+  return MULTIPLIERS[streak - 1] || 1;
 }
 
 export function updateCombo(element, streak) {
