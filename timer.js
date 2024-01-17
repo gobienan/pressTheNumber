@@ -1,27 +1,23 @@
 // timer.js
 
 export function startTimer(timerContainer, totalTimeInSeconds, callback) {
-  let timeLeft = totalTimeInSeconds;
-  const timerValue = timerContainer.querySelector(".Timer__value");
+  let timeLeft = totalTimeInSeconds - 1;
   const timerProgress = timerContainer.querySelector(".Timer__progress");
 
   const intervalId = setInterval(() => {
-    if (timeLeft <= 0) {
+    const percentage = (timeLeft / totalTimeInSeconds) * 100;
+    timerProgress.style.width = `${percentage}%`;
+    if (timeLeft < 0) {
       clearInterval(intervalId);
       callback();
-    } else {
-      const percentage = (timeLeft / totalTimeInSeconds) * 100;
-      timerProgress.style.width = `${percentage}%`;
-      timerValue.textContent = `${timeLeft} s`;
-      timeLeft--;
     }
+    timeLeft--;
   }, 1000);
+
+  return intervalId;
 }
 
 export function resetTimer(timerContainer) {
-  const timerValue = timerContainer.querySelector(".Timer__value");
   const timerProgress = timerContainer.querySelector(".Timer__progress");
-
   timerProgress.style.width = "100%";
-  timerValue.textContent = "";
 }

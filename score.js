@@ -9,6 +9,10 @@ export function setupScore(element, initialScore = 0) {
   element.appendChild(scoreValueElement);
   currentScore = initialScore;
   scoreUpdateCallback = (newScore) => {
+    console.log({
+      scoreValueElement,
+      newScore,
+    });
     scoreValueElement.textContent = newScore;
   };
 }
