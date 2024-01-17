@@ -41,10 +41,10 @@ function handleNumberPress(number) {
     streak++;
     const comboMultiplier = calculateComboMultiplier(streak); // Calculate combo multiplier.
     const score = updateScore(10 * comboMultiplier); // Update score.
-    updateLevel(score);
-    updateGrid(numbersToPress, number);
-    updateCombo(comboContainer, streak); // Update the combo display.
     numbersToPress.splice(isNumberInArray, 1);
+    updateLevel(score);
+    updateGrid(numbersToPress);
+    updateCombo(comboContainer, streak); // Update the combo display.
     if (isVibrationSupported) {
       navigator.vibrate(200);
     }
@@ -64,7 +64,6 @@ function handleNumberPress(number) {
 function onTimerEnd() {
   console.log("Timer has ended!");
   const score = getScore();
-  const level = getLevel();
 
   const restart = confirm(`Game over! Your score is ${score}! Restart?`);
   if (restart) {
