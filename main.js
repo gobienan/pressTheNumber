@@ -21,6 +21,7 @@ document.querySelector("#app").innerHTML = `
 
   </div>
 `;
+const isVibrationSupported = "vibrate" in navigator;
 
 const grid = document.querySelector(".grid");
 const scoreContainer = document.querySelector(".score");
@@ -28,7 +29,6 @@ const levelContainer = document.querySelector(".level");
 const comboContainer = document.querySelector(".combo");
 const timerContainer = document.querySelector(".Timer");
 
-const currentLevel = getLevel();
 let streak = 0;
 let numbersToPress = generateNumbersToPress();
 const totalTimeInSeconds = 30; // Set the total time in seconds for the timer.
@@ -41,10 +41,13 @@ function handleNumberPress(number) {
     streak++;
     const comboMultiplier = calculateComboMultiplier(streak); // Calculate combo multiplier.
     const score = updateScore(10 * comboMultiplier); // Update score.
-    numbersToPress.splice(isNumberInArray, 1);
     updateLevel(score);
-    updateGrid(numbersToPress);
+    updateGrid(numbersToPress, number);
     updateCombo(comboContainer, streak); // Update the combo display.
+    numbersToPress.splice(isNumberInArray, 1);
+    if (isVibrationSupported) {
+      navigator.vibrate(200);
+    }
   } else {
     streak = 0;
     updateGrid(numbersToPress, number);
@@ -66,14 +69,18 @@ function onTimerEnd() {
   const restart = confirm(`Game over! Your score is ${score}! Restart?`);
   if (restart) {
     resetTimer(timerContainer);
-    updateScore(-score);
-    updateLevel(-level);
-    updateGrid(numbersToPress);
-    startTimer(timerContainer, totalTimeInSeconds, onTimerEnd);
-  } else {
-    resetTimer(timerContainer);
     updateScore(0);
     updateLevel(0);
+    updateGrid(numbersToPress);
+    streak = 0;
+    startTimer(timerContainer, totalTimeInSeconds, onTimerEnd);
+  } else {
+    console.log("Game ended!");
+    updateLevel(0);
+    updateScore(0);
+    resetTimer(timerContainer);
+    streak = 0;
+    numbersToPress = generateNumbersToPress();
     updateGrid(numbersToPress);
   }
 }
@@ -81,7 +88,6 @@ function onTimerEnd() {
 setupScore(scoreContainer, 0); // Set up the score display.
 setupLevel(levelContainer, 1); // Set up the level display.
 
-console.log(`Current Level: ${currentLevel}`);
 setupGrid(grid, handleNumberPress);
 updateGrid(numbersToPress);
 startTimer(timerContainer, totalTimeInSeconds, onTimerEnd);
