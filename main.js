@@ -1,8 +1,8 @@
 // Import necessary modules and functions
 import "./style.css";
-import { setupGrid, updateGrid } from "./grid.js";
-import { setupScore, updateScore } from "./score.js";
-import { generateNumbersToPress } from "./numberGenerator.js";
+import { setupGrid, updateGrid } from "./src/grid.js";
+import { setupScore, updateScore } from "./src/score.js";
+import { generateNumbersToPress } from "./src/numberGenerator.js";
 
 // Get the app container
 const appContainer = document.querySelector("#app");
