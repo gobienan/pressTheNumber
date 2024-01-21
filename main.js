@@ -7,7 +7,7 @@ import { generateNumbersToPress } from "./numberGenerator.js";
 import { calculateComboMultiplier, updateCombo } from "./combo.js";
 import { startTimer, resetTimer } from "./timer.js";
 import background from "/background.mp3";
-import mouseClick from "/interface.mp3";
+import mouseClick from "/button.mp3";
 import error from "/error.mp3";
 
 // Get the app container
@@ -54,7 +54,7 @@ function handleNumberPress(number) {
   }
   const audioCorrect = new Audio(mouseClick);
   const audioError = new Audio(error);
-  audioCorrect.volume = 0.05;
+  audioCorrect.volume = 0.02;
   audioError.volume = 0.1;
   if (!timer) {
     timer = startTimer(timerContainer, gameTime, onTimerEnd);
