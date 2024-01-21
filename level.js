@@ -1,4 +1,5 @@
 // level.js
+import nextLevel from '/next-level.mp3';
 
 export let currentLevel = 1;
 let levelUpdateCallback = () => {};
@@ -19,6 +20,9 @@ export function updateLevel(score) {
   for (let i = SCORE_THRESHOLDS.length - 1; i >= 0; i--) {
     if (score >= SCORE_THRESHOLDS[i]) {
       if (currentLevel !== i + 1 && currentLevel < SCORE_THRESHOLDS.length) {
+        const audio = new Audio(nextLevel);
+        audio.volume = 0.2;
+        audio.play();
         currentLevel = i + 1;
         levelUpdateCallback(currentLevel);
       }

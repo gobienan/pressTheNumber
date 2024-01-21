@@ -6,10 +6,13 @@ import { setupLevel, updateLevel } from "./level.js";
 import { generateNumbersToPress } from "./numberGenerator.js";
 import { calculateComboMultiplier, updateCombo } from "./combo.js";
 import { startTimer, resetTimer } from "./timer.js";
+import background from "/background.mp3";
+import mouseClick from "/interface.mp3";
+import error from "/error.mp3";
 
 // Get the app container
 const appContainer = document.querySelector("#app");
-
+let audioIsPlaying = false;
 // Set up the initial HTML structure
 appContainer.innerHTML = `
   <div>
@@ -36,13 +39,23 @@ const timerContainer = appContainer.querySelector(".Timer");
 let streak = 0;
 let numbersToPress = generateNumbersToPress();
 let timer = null;
-const gameTime = 5;
+const gameTime = 30;
 
 // Check if vibration is supported
 const isVibrationSupported = "vibrate" in navigator;
 
 // Function to handle number press
 function handleNumberPress(number) {
+  if (!audioIsPlaying) {
+    const audio = new Audio(background);
+    audio.volume = 0.2;
+    audio.play();
+    audioIsPlaying = true;
+  }
+  const audioCorrect = new Audio(mouseClick);
+  const audioError = new Audio(error);
+  audioCorrect.volume = 0.05;
+  audioError.volume = 0.1;
   if (!timer) {
     timer = startTimer(timerContainer, gameTime, onTimerEnd);
   }
@@ -50,6 +63,7 @@ function handleNumberPress(number) {
   const isNumberInArray = numbersToPress.findIndex((n) => n === number);
 
   if (isNumberInArray !== -1) {
+    audioCorrect.play();
     streak++;
     const comboMultiplier = calculateComboMultiplier(comboContainer, streak);
     const score = updateScore(10 * comboMultiplier);
@@ -63,6 +77,7 @@ function handleNumberPress(number) {
       navigator.vibrate(200);
     }
   } else {
+    audioError.play();
     streak = 0;
     updateGrid(numbersToPress, number);
     updateScore(-5);
@@ -93,6 +108,7 @@ function onTimerEnd() {
 
 // Initialize the game
 function initializeGame() {
+
   setupScore(scoreContainer, 0);
   setupLevel(levelContainer, 1);
   setupGrid(gridContainer, handleNumberPress);
